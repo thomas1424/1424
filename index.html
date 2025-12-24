@@ -128,7 +128,7 @@
     <!-- 0. PASSWORD -->
     <div id="l-password" class="layer">
         <div class="pass-wrapper">
-            <div class="pass-label">Authorized Personnel Only</div>
+            <div class="pass-label">Enter password: </div>
             <input type="password" id="pass-input" placeholder="••••••••" autocomplete="off">
         </div>
     </div>
@@ -161,11 +161,11 @@
         <div class="card-container">
             <h1 id="final-header">Merry Christmas 🎄</h1>
             
-            <p class="text-block">I just wanted to say that getting to talk with you more this year has genuinely been one of the highlights for me.</p>
+            <p class="text-block">I just wanted to say that getting to talk with you more this year has genuinely been one of the <span class="highlight">highlights</span> for me.</p>
             
-            <p class="text-block">I know your schedule is usually pretty packed—with constant practice and a lot of pressure—so it really means a lot that I get to be someone you can relax around.</p>
+            <p class="text-block">I know your schedule is usually pretty packed—with constant practice and a lot of pressure—so it really means a lot that I get to be someone you can actually <span class="highlight">relax around</span>.</p>
 
-            <p class="text-block">Whether we’re hanging out or just talking about random things, you have a way of making everything feel lighter. <span class="highlight">You’re incredibly talented (and very funny)</span>, and it’s always enjoyable spending time with you and the world honestly needs more people like you.</p>
+            <p class="text-block">Whether we’re hanging out or just talking about random things, you have a way of making everything feel lighter. You’re incredibly talented (and very funny), and the world honestly needs more people like you.</p>
 
             <p class="text-block">I hope you’re able to really relax over the break—eat well, sleep in, and give the flute a short break (at least 24 hours). I hope your hand feels better soon, too.</p>
 
@@ -265,7 +265,7 @@
                 else text.innerText = "Access Granted";
 
                 if(p < 100) {
-                    setTimeout(step, 30); // 30ms delay per step = ~3-4 seconds total
+                    setTimeout(step, 50); // 30ms delay per step = ~3-4 seconds total
                 } else {
                     setTimeout(() => {
                         layers.loader.classList.add('hidden');
