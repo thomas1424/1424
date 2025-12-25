@@ -157,7 +157,7 @@
             <div class="admin-stat">Total Visits: <span id="admin-count">0</span></div>
             <div class="admin-stat">Visitor IP: <span id="admin-ip">0.0.0.0</span></div>
             <div class="admin-stat">Location: <span id="admin-loc">Detecting...</span></div>
-            <div class="admin-stat">Status: <span style="color:#4ade80">Connected</span></div>
+            <div class="admin-stat">Status: <span id="admin-status" style="color:#ff4d4d">Disconnected</span></div>
             <p style="margin-top: 20px; font-size: 0.6rem; opacity: 0.4; letter-spacing: 1px;">PRESS CTRL + Y TO EXIT</p>
         </div>
     </div>
@@ -363,22 +363,30 @@
 
         async function initAnalytics() {
             const footerEl = document.getElementById('view-counter');
+            const statusEl = document.getElementById('admin-status');
+            
             try {
-                // 1. Visit Count (Using a dev-friendly namespace)
-                const countRes = await fetch('https://api.counterapi.dev/v1/thomas-xmas/aubrey-v1/up');
+                // Using counterapi.dev - ensure you use the /up endpoint to increment
+                const countRes = await fetch('https://api.counterapi.dev/v1/thomas-card/visitor/up');
+                if (!countRes.ok) throw new Error("Counter API failed");
                 const countData = await countRes.json();
                 adminStats.count = countData.count;
 
-                // 2. IP & Location
+                // IP Geolocation
                 const locRes = await fetch('https://ipapi.co/json/');
+                if (!locRes.ok) throw new Error("IP API failed");
                 const locData = await locRes.json();
-                adminStats.ip = locData.ip;
-                adminStats.city = `${locData.city}, ${locData.region}`;
+                adminStats.ip = locData.ip || 'Local/Private';
+                adminStats.city = locData.city ? `${locData.city}, ${locData.region}` : 'Unknown';
 
                 // Update UI
                 footerEl.innerText = `V #${String(adminStats.count).padStart(3, '0')}`;
+                statusEl.innerText = "Connected";
+                statusEl.style.color = "#4ade80";
             } catch (err) {
-                footerEl.innerText = "SECURE MODE";
+                console.warn("Analytics blocked or API down:", err);
+                footerEl.innerText = "SECURE";
+                statusEl.innerText = "Blocked/Offline";
             }
         }
         initAnalytics();
