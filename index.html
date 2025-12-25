@@ -161,6 +161,21 @@
 
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
+        /* Visitor Counter Style */
+        .view-counter {
+            position: fixed;
+            bottom: 15px;
+            right: 20px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.7rem;
+            color: var(--text-main);
+            opacity: 0.4;
+            z-index: 200;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
+            pointer-events: none; 
+        }
+
         @media (max-width: 600px) {
             h1 { font-size: 2.2rem; }
             .text-block { font-size: 1rem; }
@@ -225,6 +240,8 @@
             <span class="scroll-arrow">↓</span>
         </div>
     </div>
+
+    <div id="view-counter" class="view-counter">Loading visits...</div>
 
     <script>
         // --- REALISTIC SNOW ENGINE ---
@@ -450,6 +467,27 @@
 
             setTimeout(typeNextElement, 1500);
         }
+
+        // --- GLOBAL VISITOR COUNTER ---
+        (async function() {
+            const displayEl = document.getElementById('view-counter');
+            // Unique ID for the Aubrey Xmas Card 2025
+            const namespace = 'aubrey-xmas-card-2025-v1'; 
+            // Using 'up' to increment on every visit
+            const apiUrl = `https://api.counterapi.com/v1/up?url=${encodeURIComponent(namespace)}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                // Format with leading zeros (e.g., 042)
+                const formattedCount = String(data.count).padStart(3, '0');
+                displayEl.innerText = `VISIT #${formattedCount}`;
+            } catch (error) {
+                console.error("Counter API failed:", error);
+                displayEl.style.display = 'none'; // Gracefully hide on error
+            }
+        })();
     </script>
 </body>
 </html>
